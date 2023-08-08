@@ -32,7 +32,7 @@ class _CrosswordScreenState extends State<CrosswordScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Scram Crossword'),
+        title: const Text("SCRAM"),
       ),
       body: Column(
         children: [

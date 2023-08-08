@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class RandomLettersSection extends StatelessWidget {
   final List<String> randomLetters;
 
-  RandomLettersSection({required this.randomLetters});
+  const RandomLettersSection({super.key, required this.randomLetters});
 
   @override
   Widget build(BuildContext context) {

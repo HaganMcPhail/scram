@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CrosswordGrid extends StatefulWidget {
   final List<String> randomLetters;
 
-  CrosswordGrid({required this.randomLetters});
+  const CrosswordGrid({super.key, required this.randomLetters});
 
   @override
   _CrosswordGridState createState() => _CrosswordGridState();
@@ -25,6 +25,9 @@ class _CrosswordGridState extends State<CrosswordGrid> {
     if (!allowedLetters.contains(newText.toUpperCase())) {
       newText = ''; // Clear the text if not allowed
     }
+    // remove the letter from randomLetters so it can't be used again
+    widget.randomLetters.remove(newText.toUpperCase());
+
     controllers[index].value = TextEditingValue(
       text: newText.toUpperCase(),
       selection: TextSelection.fromPosition(
@@ -35,11 +38,6 @@ class _CrosswordGridState extends State<CrosswordGrid> {
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
-    double screenWidth = MediaQuery.of(context).size.width;
-    double containerHeight = screenHeight * 90 / 100;
-    double containerWidth = screenWidth * 99 / 100;
-
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 5, // 5 columns
