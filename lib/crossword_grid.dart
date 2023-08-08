@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class CrosswordGrid extends StatefulWidget {
+  final List<String> randomLetters;
+
+  CrosswordGrid({required this.randomLetters});
+
   @override
   _CrosswordGridState createState() => _CrosswordGridState();
 }
@@ -14,6 +18,19 @@ class _CrosswordGridState extends State<CrosswordGrid> {
       controller.dispose();
     }
     super.dispose();
+  }
+
+  void _onTextChanged(int index, String newText) {
+    final allowedLetters = widget.randomLetters.toSet();
+    if (!allowedLetters.contains(newText.toUpperCase())) {
+      newText = ''; // Clear the text if not allowed
+    }
+    controllers[index].value = TextEditingValue(
+      text: newText,
+      selection: TextSelection.fromPosition(
+        TextPosition(offset: newText.length),
+      ),
+    );
   }
 
   @override
@@ -37,6 +54,7 @@ class _CrosswordGridState extends State<CrosswordGrid> {
               decoration: InputDecoration(
                 border: InputBorder.none,
               ),
+              onChanged: (newText) => _onTextChanged(index, newText),
             ),
           ),
         );

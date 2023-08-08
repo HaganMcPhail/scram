@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:scram/crossword_grid.dart';
-import 'package:scram/random_letters_section.dart';
+import 'crossword_grid.dart';
+import 'random_letters_section.dart';
+import 'utilities.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,7 +20,14 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class CrosswordScreen extends StatelessWidget {
+class CrosswordScreen extends StatefulWidget {
+  @override
+  _CrosswordScreenState createState() => _CrosswordScreenState();
+}
+
+class _CrosswordScreenState extends State<CrosswordScreen> {
+  late final List<String> randomLetters = generateRandomLetters(25);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,16 +37,14 @@ class CrosswordScreen extends StatelessWidget {
       body: Column(
         children: [
           Flexible(
-            child: CrosswordGrid(),
+            child: CrosswordGrid(randomLetters: randomLetters),
           ),
           SizedBox(height: 20),
           Flexible(
-            child: RandomLettersSection(),
+            child: RandomLettersSection(randomLetters: randomLetters),
           ),
         ],
       ),
     );
   }
 }
-
-
