@@ -7,6 +7,11 @@ class RandomLettersSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+    double containerHeight = screenHeight * 10 / 100;
+    double containerWidth = screenWidth * 4 / 100;
+
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
@@ -14,7 +19,8 @@ class RandomLettersSection extends StatelessWidget {
         children: [
           for (final letter in randomLetters)
             Container(
-              width: 40,
+              width: containerWidth,
+              height: containerHeight,
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.black),
               ),

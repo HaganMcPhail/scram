@@ -36,11 +36,11 @@ class _CrosswordScreenState extends State<CrosswordScreen> {
       ),
       body: Column(
         children: [
-          Flexible(
+          Expanded(
             child: CrosswordGrid(randomLetters: randomLetters),
           ),
-          SizedBox(height: 20),
-          Flexible(
+          Align(
+            alignment: Alignment.bottomCenter,
             child: RandomLettersSection(randomLetters: randomLetters),
           ),
         ],

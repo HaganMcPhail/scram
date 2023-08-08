@@ -26,7 +26,7 @@ class _CrosswordGridState extends State<CrosswordGrid> {
       newText = ''; // Clear the text if not allowed
     }
     controllers[index].value = TextEditingValue(
-      text: newText,
+      text: newText.toUpperCase(),
       selection: TextSelection.fromPosition(
         TextPosition(offset: newText.length),
       ),
@@ -35,6 +35,11 @@ class _CrosswordGridState extends State<CrosswordGrid> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+    double containerHeight = screenHeight * 90 / 100;
+    double containerWidth = screenWidth * 99 / 100;
+
     return GridView.builder(
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 5, // 5 columns
@@ -53,6 +58,7 @@ class _CrosswordGridState extends State<CrosswordGrid> {
               style: TextStyle(fontSize: 20),
               decoration: InputDecoration(
                 border: InputBorder.none,
+                counterText: '',
               ),
               onChanged: (newText) => _onTextChanged(index, newText),
             ),
