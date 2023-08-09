@@ -22,14 +22,18 @@ class MyApp extends StatelessWidget {
 
 class CrosswordScreen extends StatefulWidget {
   @override
-  _CrosswordScreenState createState() => _CrosswordScreenState();
+  CrosswordScreenState createState() => CrosswordScreenState();
 }
 
-class _CrosswordScreenState extends State<CrosswordScreen> {
-  late final List<String> randomLetters = generateRandomLetters(25);
+class CrosswordScreenState extends State<CrosswordScreen> {
+  List<String> randomLetters = generateRandomLetters(25);
+  List<String> allowedLetters = [];
+  List<String> usedLetters = [];
 
   @override
   Widget build(BuildContext context) {
+    allowedLetters.addAll(randomLetters);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("SCRAM"),
@@ -37,11 +41,11 @@ class _CrosswordScreenState extends State<CrosswordScreen> {
       body: Column(
         children: [
           Expanded(
-            child: CrosswordGrid(randomLetters: randomLetters),
+            child: CrosswordGrid(randomLetters: randomLetters, allowedLetters: allowedLetters, usedLetters: usedLetters, crosswordScreenState: this),
           ),
           Align(
             alignment: Alignment.bottomCenter,
-            child: RandomLettersSection(randomLetters: randomLetters),
+            child: RandomLettersSection(randomLetters: randomLetters, allowedLetters: allowedLetters, usedLetters: usedLetters, crosswordScreenState: this),
           ),
         ],
       ),

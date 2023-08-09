@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:scram/main.dart';
 
 class CrosswordGrid extends StatefulWidget {
   final List<String> randomLetters;
+  final List<String> usedLetters;
+  final List<String> allowedLetters;
+  final CrosswordScreenState crosswordScreenState;
 
-  const CrosswordGrid({super.key, required this.randomLetters});
+  const CrosswordGrid({super.key, required this.randomLetters, required this.allowedLetters, required this.usedLetters, required this.crosswordScreenState});
 
   @override
   _CrosswordGridState createState() => _CrosswordGridState();
@@ -21,12 +25,18 @@ class _CrosswordGridState extends State<CrosswordGrid> {
   }
 
   void _onTextChanged(int index, String newText) {
-    final allowedLetters = widget.randomLetters.toSet();
-    if (!allowedLetters.contains(newText.toUpperCase())) {
+    if (!widget.allowedLetters.contains(newText.toUpperCase())) {
       newText = ''; // Clear the text if not allowed
+    } else {
+      setState(() {
+        widget.allowedLetters.remove(newText.toUpperCase());
+        widget.usedLetters.add(newText.toUpperCase());
+      });
     }
+
     // remove the letter from randomLetters so it can't be used again
-    widget.randomLetters.remove(newText.toUpperCase());
+    // set state to update the randomLetters in the
+    // widget.randomLetters.remove(newText.toUpperCase());
 
     controllers[index].value = TextEditingValue(
       text: newText.toUpperCase(),
@@ -34,6 +44,8 @@ class _CrosswordGridState extends State<CrosswordGrid> {
         TextPosition(offset: newText.length),
       ),
     );
+
+    setState(() {});
   }
 
   @override
