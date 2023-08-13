@@ -43,8 +43,10 @@ class _CrosswordGridState extends State<CrosswordGrid> {
       // Remove the last letter from usedLetters
       widget.onLetterUsed(lastLetter, "remove");
     } else if (!widget.allowedLetters.contains(newText.toUpperCase())) {
-      newText = ''; // Clear the text if not allowed
-    } else {
+      if (newText.toUpperCase() != oldText.toUpperCase()) {
+        newText = ''; // Clear the text if not allowed
+      }
+    } else if (newText.toUpperCase() != oldText.toUpperCase()) {
       widget.onLetterUsed(newText.toUpperCase(), "add");
     }
 
