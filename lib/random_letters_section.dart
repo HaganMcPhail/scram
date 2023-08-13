@@ -15,45 +15,30 @@ class RandomLettersSection extends StatelessWidget {
     double containerHeight = screenHeight * 10 / 100;
     double containerWidth = screenWidth * 4 / 100;
 
-    Map<String, int> randomLettersCount = {};
-    for (var letter in randomLetters) {
-      if (!randomLettersCount.containsKey(letter)) {
-        randomLettersCount[letter] = 1;
-      } else {
-        randomLettersCount[letter] = (randomLettersCount[letter] ?? 0) + 1;
-      }
-    }
-
-    Map<String, int> usedLettersCount = {};
-    for (var letter in usedLetters) {
-      if (!usedLettersCount.containsKey(letter)) {
-        usedLettersCount[letter] = 1;
-      } else {
-        usedLettersCount[letter] = (usedLettersCount[letter] ?? 0) + 1;
-      }
-    }
-
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          for (final letter in randomLetters)
-            Container(
-              width: containerWidth,
-              height: containerHeight,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
-                color: (usedLettersCount[letter] ?? 0) >= (randomLettersCount[letter] ?? 0) ? Colors.grey : Colors.white,
-              ),
-              child: Center(
-                child: Text(
-                  letter,
-                  style: TextStyle(fontSize: 20),
-                ),
+        children: randomLetters.asMap().entries.map((entry) {
+          int idx = entry.key;
+          String letter = entry.value;
+          int letterCountInRandom = randomLetters.sublist(0, idx + 1).where((l) => l == letter).length;
+          int letterCountInUsed = usedLetters.where((l) => l == letter).length;
+          return Container(
+            width: containerWidth,
+            height: containerHeight,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black),
+              color: letterCountInUsed >= letterCountInRandom ? Colors.grey : Colors.white,
+            ),
+            child: Center(
+              child: Text(
+                letter,
+                style: TextStyle(fontSize: 20),
               ),
             ),
-        ],
+          );
+        }).toList(),
       ),
     );
   }
