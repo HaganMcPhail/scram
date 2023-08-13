@@ -15,6 +15,24 @@ class RandomLettersSection extends StatelessWidget {
     double containerHeight = screenHeight * 10 / 100;
     double containerWidth = screenWidth * 4 / 100;
 
+    Map<String, int> randomLettersCount = {};
+    for (var letter in randomLetters) {
+      if (!randomLettersCount.containsKey(letter)) {
+        randomLettersCount[letter] = 1;
+      } else {
+        randomLettersCount[letter] = (randomLettersCount[letter] ?? 0) + 1;
+      }
+    }
+
+    Map<String, int> usedLettersCount = {};
+    for (var letter in usedLetters) {
+      if (!usedLettersCount.containsKey(letter)) {
+        usedLettersCount[letter] = 1;
+      } else {
+        randomLettersCount[letter] = (randomLettersCount[letter] ?? 0) + 1;
+      }
+    }
+
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
@@ -26,7 +44,7 @@ class RandomLettersSection extends StatelessWidget {
               height: containerHeight,
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.black),
-                color: usedLetters.contains(letter) ? Colors.grey : Colors.white,
+                color: (usedLettersCount[letter] ?? 0) >= (randomLettersCount[letter] ?? 0) ? Colors.grey : Colors.white,
               ),
               child: Center(
                 child: Text(

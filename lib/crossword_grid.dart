@@ -39,10 +39,6 @@ class _CrosswordGridState extends State<CrosswordGrid> {
       widget.onLetterUsed(newText.toUpperCase());
     }
 
-    // remove the letter from randomLetters so it can't be used again
-    // set state to update the randomLetters in the
-    // widget.randomLetters.remove(newText.toUpperCase());
-
     controllers[index].value = TextEditingValue(
       text: newText.toUpperCase(),
       selection: TextSelection.fromPosition(

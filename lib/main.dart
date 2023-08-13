@@ -30,6 +30,11 @@ class CrosswordScreenState extends State<CrosswordScreen> {
   List<String> allowedLetters = [];
   List<String> usedLetters = [];
 
+  void initState() {
+    super.initState();
+    allowedLetters.addAll(randomLetters);
+  }
+
   void _onLetterUsed(String letter) {
     setState(() {
       allowedLetters.remove(letter);
@@ -39,8 +44,6 @@ class CrosswordScreenState extends State<CrosswordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    allowedLetters.addAll(randomLetters);
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("SCRAM"),
