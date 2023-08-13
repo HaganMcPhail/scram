@@ -29,7 +29,7 @@ class RandomLettersSection extends StatelessWidget {
       if (!usedLettersCount.containsKey(letter)) {
         usedLettersCount[letter] = 1;
       } else {
-        randomLettersCount[letter] = (randomLettersCount[letter] ?? 0) + 1;
+        usedLettersCount[letter] = (usedLettersCount[letter] ?? 0) + 1;
       }
     }
 
