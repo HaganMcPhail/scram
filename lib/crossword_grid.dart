@@ -5,7 +5,7 @@ class CrosswordGrid extends StatefulWidget {
   final List<String> randomLetters;
   final List<String> usedLetters;
   final List<String> allowedLetters;
-  final Function(String) onLetterUsed;
+  final void Function(String, String) onLetterUsed;
   final CrosswordScreenState crosswordScreenState;
 
   const CrosswordGrid({
@@ -23,6 +23,7 @@ class CrosswordGrid extends StatefulWidget {
 
 class _CrosswordGridState extends State<CrosswordGrid> {
   List<TextEditingController> controllers = List.generate(25, (_) => TextEditingController());
+  List<String> previousTexts = List.generate(25, (_) => "");
 
   @override
   void dispose() {
@@ -33,10 +34,18 @@ class _CrosswordGridState extends State<CrosswordGrid> {
   }
 
   void _onTextChanged(int index, String newText) {
-    if (!widget.allowedLetters.contains(newText.toUpperCase())) {
+    String oldText = previousTexts[index];
+
+    if (newText.isEmpty && oldText.isNotEmpty) {
+      // Backspace was pressed
+      String lastLetter = oldText.toUpperCase();
+
+      // Remove the last letter from usedLetters
+      widget.onLetterUsed(lastLetter, "remove");
+    } else if (!widget.allowedLetters.contains(newText.toUpperCase())) {
       newText = ''; // Clear the text if not allowed
     } else {
-      widget.onLetterUsed(newText.toUpperCase());
+      widget.onLetterUsed(newText.toUpperCase(), "add");
     }
 
     controllers[index].value = TextEditingValue(
@@ -45,6 +54,9 @@ class _CrosswordGridState extends State<CrosswordGrid> {
         TextPosition(offset: newText.length),
       ),
     );
+
+    // Update the previous text
+    previousTexts[index] = newText;
 
     setState(() {});
   }

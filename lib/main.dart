@@ -1,9 +1,17 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'crossword_grid.dart';
 import 'random_letters_section.dart';
 import 'utilities.dart';
 
 void main() {
+  FlutterError.onError = (FlutterErrorDetails details) {
+    if (details.exceptionAsString().contains('KeyUpEvent is dispatched, but the state shows that the physical key is not pressed')) {
+      return;
+    }
+    FlutterError.dumpErrorToConsole(details);
+  };
   runApp(MyApp());
 }
 
@@ -35,11 +43,19 @@ class CrosswordScreenState extends State<CrosswordScreen> {
     allowedLetters.addAll(randomLetters);
   }
 
-  void _onLetterUsed(String letter) {
-    setState(() {
-      allowedLetters.remove(letter);
-      usedLetters.add(letter);
-    });
+  void _onLetterUsed(String letter, String action) {
+    if (action == "add") {
+      setState(() {
+        allowedLetters.remove(letter);
+        usedLetters.add(letter);
+      });
+    } else if (action == "remove") {
+      setState(() {
+        allowedLetters.add(letter);
+        usedLetters.remove(letter);
+      });
+    }
+    
   }
 
   @override
