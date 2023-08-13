@@ -34,7 +34,7 @@ class CrosswordScreen extends StatefulWidget {
 }
 
 class CrosswordScreenState extends State<CrosswordScreen> {
-  List<String> randomLetters = generateRandomLetters(25);
+  List<String> randomLetters = generateRandomLetters(24);
   List<String> allowedLetters = [];
   List<String> usedLetters = [];
 
