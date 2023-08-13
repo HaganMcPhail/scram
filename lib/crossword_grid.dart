@@ -5,9 +5,17 @@ class CrosswordGrid extends StatefulWidget {
   final List<String> randomLetters;
   final List<String> usedLetters;
   final List<String> allowedLetters;
+  final Function(String) onLetterUsed;
   final CrosswordScreenState crosswordScreenState;
 
-  const CrosswordGrid({super.key, required this.randomLetters, required this.allowedLetters, required this.usedLetters, required this.crosswordScreenState});
+  const CrosswordGrid({
+    super.key,
+    required this.randomLetters,
+    required this.allowedLetters,
+    required this.usedLetters,
+    required this.onLetterUsed,
+    required this.crosswordScreenState
+  });
 
   @override
   _CrosswordGridState createState() => _CrosswordGridState();
@@ -28,10 +36,7 @@ class _CrosswordGridState extends State<CrosswordGrid> {
     if (!widget.allowedLetters.contains(newText.toUpperCase())) {
       newText = ''; // Clear the text if not allowed
     } else {
-      setState(() {
-        widget.allowedLetters.remove(newText.toUpperCase());
-        widget.usedLetters.add(newText.toUpperCase());
-      });
+      widget.onLetterUsed(newText.toUpperCase());
     }
 
     // remove the letter from randomLetters so it can't be used again

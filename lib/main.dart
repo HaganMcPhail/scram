@@ -30,6 +30,13 @@ class CrosswordScreenState extends State<CrosswordScreen> {
   List<String> allowedLetters = [];
   List<String> usedLetters = [];
 
+  void _onLetterUsed(String letter) {
+    setState(() {
+      allowedLetters.remove(letter);
+      usedLetters.add(letter);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     allowedLetters.addAll(randomLetters);
@@ -41,7 +48,13 @@ class CrosswordScreenState extends State<CrosswordScreen> {
       body: Column(
         children: [
           Expanded(
-            child: CrosswordGrid(randomLetters: randomLetters, allowedLetters: allowedLetters, usedLetters: usedLetters, crosswordScreenState: this),
+            child: CrosswordGrid(
+              randomLetters: randomLetters,
+              allowedLetters: allowedLetters,
+              usedLetters: usedLetters,
+              onLetterUsed: _onLetterUsed,
+              crosswordScreenState: this,
+            ),
           ),
           Align(
             alignment: Alignment.bottomCenter,
