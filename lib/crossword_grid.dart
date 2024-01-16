@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scram/main.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 class CrosswordGrid extends StatefulWidget {
   final List<String> randomLetters;
@@ -33,6 +34,57 @@ class _CrosswordGridState extends State<CrosswordGrid> {
     super.dispose();
   }
 
+  // void _checkPuzzleSolved() async {
+  //   List<String> inputWords = controllers.map((controller) => controller.text.toUpperCase()).toList();
+  //   List<String> directions = ['E', 'S'];
+
+  //   String getWord(String direction, int row, int col, int length) {
+  //     String word = '';
+
+  //     for (int i = 0; i < length; i++) {
+  //       word += inputWords[row * 5 + col];
+
+  //       switch (direction) {
+  //         case 'E':
+  //           col++;
+  //           break;
+  //         case 'S':
+  //           row++;
+  //           break;
+  //       }
+
+  //       // Check if we're out of bounds
+  //       if (row >= 5 || col >= 5) {
+  //         break;
+  //       }
+  //     }
+
+  //     return word;
+  //   }
+
+  //   void checkWords() {
+  //     for (int row = 0; row < 5; row++) {
+  //       for (int col = 0; col < 5; col++) {
+  //         for (String direction in directions) {
+  //           String word = getWord(direction, row, col, 5); // Change 5 to the maximum word length you want to check
+  //           if (widget.wordList.contains(word)) {
+  //             print('$word is in the word list');
+  //           } else {
+  //             print('$word is not in the word list');
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+
+  //   // Load the word list from the file
+  //   String wordListString = await rootBundle.loadString('assets/word-list-output.txt');
+  //   widget.wordList = wordListString.split('\n');
+
+  //   // Check if any of the input words are in the word list
+  //   checkWords();
+  // }
+
   void _onTextChanged(int index, String newText) {
     String oldText = previousTexts[index];
 
@@ -60,6 +112,8 @@ class _CrosswordGridState extends State<CrosswordGrid> {
     // Update the previous text
     previousTexts[index] = newText;
 
+    // Check if the puzzle is solved
+    // _checkPuzzleSolved();
     setState(() {});
   }
 
